@@ -1,0 +1,1 @@
+package com.kojikoji.gpt.data.trigger;

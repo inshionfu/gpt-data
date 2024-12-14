@@ -1,0 +1,5 @@
+spring:
+  config:
+    name: gpt-data
+  profiles:
+    active: dev
