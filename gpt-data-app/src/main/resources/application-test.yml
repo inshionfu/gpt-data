@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8080
 
 # 应用配置
 app:
@@ -28,6 +28,12 @@ glm:
       api-host: https://open.bigmodel.cn/api/paas/v4/chat/completions/
       # 官网申请 https://platform.openai.com/account/api-keys
       api-key: e1d64e25bb44d7c570902235ebadfe7e.MU8eKrlWQUk8GXFd
+
+wx:
+  config:
+    originalid: gh_d717e43049ed
+    appid: wx5c1faadeed8d8e0a
+    token: inshion123
 
 # 日志
 logging:
