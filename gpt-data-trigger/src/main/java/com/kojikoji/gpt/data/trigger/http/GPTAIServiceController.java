@@ -1,12 +1,11 @@
 package com.kojikoji.gpt.data.trigger.http;
 
 import com.alibaba.fastjson.JSON;
-import com.kojikoji.gpt.data.domain.auth.IAuthService;
+import com.kojikoji.gpt.data.domain.auth.service.IAuthService;
 import com.kojikoji.gpt.data.domain.openai.model.aggregates.ChatProcessAggregate;
 import com.kojikoji.gpt.data.domain.openai.model.entity.PromptEntity;
 import com.kojikoji.gpt.data.domain.openai.service.IChatService;
 import com.kojikoji.gpt.data.trigger.http.dto.GPTRequestDTO;
-import com.kojikoji.gpt.data.trigger.http.dto.MessageEntity;
 import com.kojikoji.gpt.data.types.common.Constants;
 import com.kojikoji.gpt.data.types.exception.GPTException;
 import lombok.extern.slf4j.Slf4j;
@@ -60,10 +59,13 @@ public class GPTAIServiceController {
                 return emitter;
             }
 
-            // 2.参数构建
+            // 3.获取openid
+            String openid = authService.openid(token);
+
+            // 4.参数构建
             ChatProcessAggregate req = ChatProcessAggregate.builder()
                     .model(request.getModel())
-                    .token(token)
+                    .openid(openid)
                     .messages(request.getMessages()
                             .stream()
                             .map(entity-> PromptEntity.builder()
@@ -73,7 +75,7 @@ public class GPTAIServiceController {
                             .collect(Collectors.toList()))
                     .build();
 
-            // 3. 请求结果 & 返回
+            // 5. 请求结果 & 返回
             return chatService.completions(emitter, req);
         } catch (Exception e) {
             log.error("流式应答，请求模型 {} 发生异常", request.getModel(), e);

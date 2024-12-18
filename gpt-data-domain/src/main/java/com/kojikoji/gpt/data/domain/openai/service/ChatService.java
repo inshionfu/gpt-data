@@ -6,22 +6,22 @@ import cn.bugstack.chatglm.model.Model;
 import cn.bugstack.chatglm.model.Role;
 import cn.bugstack.chatglm.session.OpenAiSession;
 import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kojikoji.gpt.data.domain.openai.model.aggregates.ChatProcessAggregate;
-import com.kojikoji.gpt.data.types.common.Constants;
-import okhttp3.internal.ws.RealWebSocket;
+import com.kojikoji.gpt.data.domain.openai.model.entity.RuleLogicEntity;
+import com.kojikoji.gpt.data.domain.openai.model.vo.LogicCheckTypeVO;
+import com.kojikoji.gpt.data.domain.openai.service.rule.ILogicFilter;
+import com.kojikoji.gpt.data.domain.openai.service.rule.factory.DefaultLogicFactory;
 import okhttp3.sse.EventSource;
 import okhttp3.sse.EventSourceListener;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.aop.target.LazyInitTargetSource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 import javax.annotation.Resource;
-import javax.print.attribute.standard.Media;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -36,7 +36,23 @@ import java.util.stream.Collectors;
 public class ChatService extends AbstractChatService {
 
     @Resource
-    private OpenAiSession openAiSession;
+    private DefaultLogicFactory logicFactory;
+
+    @Override
+    protected RuleLogicEntity<ChatProcessAggregate> doCheckLogic(ChatProcessAggregate chatProcess, String... logics) throws Exception {
+        Map<String, ILogicFilter> logicFilterMap = logicFactory.openLogicFilter();
+        RuleLogicEntity<ChatProcessAggregate> entity = null;
+        for (String code : logics) {
+            entity = logicFilterMap.get(code).filter(chatProcess);
+            if (!LogicCheckTypeVO.SUCCESS.equals(entity.getType())) {
+                return entity;
+            }
+        }
+        return entity != null ? entity : RuleLogicEntity.<ChatProcessAggregate>builder()
+                .type(LogicCheckTypeVO.SUCCESS)
+                .data(chatProcess)
+                .build();
+    }
 
     @Override
     protected void doMessageResponse(ChatProcessAggregate chatProcess, ResponseBodyEmitter emitter) throws Exception {

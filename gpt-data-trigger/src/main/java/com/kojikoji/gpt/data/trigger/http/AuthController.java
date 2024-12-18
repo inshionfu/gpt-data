@@ -1,7 +1,7 @@
 package com.kojikoji.gpt.data.trigger.http;
 
 import com.alibaba.fastjson.JSON;
-import com.kojikoji.gpt.data.domain.auth.IAuthService;
+import com.kojikoji.gpt.data.domain.auth.service.IAuthService;
 import com.kojikoji.gpt.data.domain.auth.model.entity.AuthStateEntity;
 import com.kojikoji.gpt.data.domain.auth.model.vo.AuthTypeVO;
 import com.kojikoji.gpt.data.types.common.Constants;

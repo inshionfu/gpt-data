@@ -1,8 +1,10 @@
 package com.kojikoji.gpt.data.domain.auth.service;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.cache.Cache;
 import com.kojikoji.gpt.data.domain.auth.model.entity.AuthStateEntity;
 import com.kojikoji.gpt.data.domain.auth.model.vo.AuthTypeVO;
+import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,7 @@ import javax.annotation.Resource;
 public class AuthService extends AbstractAuthService {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
+
     @Resource
     private Cache<String, String> codeCache;
 
@@ -44,11 +47,22 @@ public class AuthService extends AbstractAuthService {
         return AuthStateEntity.builder()
                 .code(AuthTypeVO.A0000.getCode())
                 .info(AuthTypeVO.A0000.getInfo())
+                .openId(openId)
                 .build();
     }
 
     @Override
     public boolean checkToken(String token) {
         return isVerify(token);
+    }
+
+    @Override
+    public String openid(String token) {
+        Claims claims = decode(token);
+        for (String k : claims.keySet()) {
+            logger.info("k: {}, v: {}", k, claims.get(k));
+        }
+        logger.info("claims: {} size: {}", JSON.toJSONString(claims), claims.size());
+        return claims.get("openId").toString();
     }
 }

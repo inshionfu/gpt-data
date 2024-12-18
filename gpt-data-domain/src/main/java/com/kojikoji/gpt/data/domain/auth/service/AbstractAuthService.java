@@ -3,7 +3,6 @@ package com.kojikoji.gpt.data.domain.auth.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.kojikoji.gpt.data.domain.auth.IAuthService;
 import com.kojikoji.gpt.data.domain.auth.model.entity.AuthStateEntity;
 import com.kojikoji.gpt.data.domain.auth.model.vo.AuthTypeVO;
 import io.jsonwebtoken.Claims;
