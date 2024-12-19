@@ -8,6 +8,7 @@ import cn.bugstack.chatglm.session.OpenAiSession;
 import com.alibaba.fastjson.JSON;
 import com.kojikoji.gpt.data.domain.openai.model.aggregates.ChatProcessAggregate;
 import com.kojikoji.gpt.data.domain.openai.model.entity.RuleLogicEntity;
+import com.kojikoji.gpt.data.domain.openai.model.entity.UserAccountQuotaEntity;
 import com.kojikoji.gpt.data.domain.openai.model.vo.LogicCheckTypeVO;
 import com.kojikoji.gpt.data.domain.openai.service.rule.ILogicFilter;
 import com.kojikoji.gpt.data.domain.openai.service.rule.factory.DefaultLogicFactory;
@@ -39,11 +40,11 @@ public class ChatService extends AbstractChatService {
     private DefaultLogicFactory logicFactory;
 
     @Override
-    protected RuleLogicEntity<ChatProcessAggregate> doCheckLogic(ChatProcessAggregate chatProcess, String... logics) throws Exception {
-        Map<String, ILogicFilter> logicFilterMap = logicFactory.openLogicFilter();
+    protected RuleLogicEntity<ChatProcessAggregate> doCheckLogic(ChatProcessAggregate chatProcess, UserAccountQuotaEntity data, String... logics) throws Exception {
+        Map<String, ILogicFilter<UserAccountQuotaEntity>> logicFilterMap = logicFactory.openLogicFilter();
         RuleLogicEntity<ChatProcessAggregate> entity = null;
         for (String code : logics) {
-            entity = logicFilterMap.get(code).filter(chatProcess);
+            entity = logicFilterMap.get(code).filter(chatProcess, data);
             if (!LogicCheckTypeVO.SUCCESS.equals(entity.getType())) {
                 return entity;
             }

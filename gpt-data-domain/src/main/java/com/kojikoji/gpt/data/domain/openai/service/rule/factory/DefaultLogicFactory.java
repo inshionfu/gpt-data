@@ -1,11 +1,13 @@
 package com.kojikoji.gpt.data.domain.openai.service.rule.factory;
 
 import com.kojikoji.gpt.data.domain.openai.annotation.LogicStrategy;
+import com.kojikoji.gpt.data.domain.openai.model.entity.UserAccountQuotaEntity;
 import com.kojikoji.gpt.data.domain.openai.service.rule.ILogicFilter;
 import jdk.internal.dynalink.linker.LinkerServices;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.catalina.User;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +30,9 @@ import java.util.concurrent.ConcurrentMap;
 @Service
 public class DefaultLogicFactory {
 
-    public Map<String, ILogicFilter> logicFilterMap = new ConcurrentHashMap<>();
+    public Map<String, ILogicFilter<UserAccountQuotaEntity>> logicFilterMap = new ConcurrentHashMap<>();
 
-    public DefaultLogicFactory(List<ILogicFilter> logicFilters) {
+    public DefaultLogicFactory(List<ILogicFilter<UserAccountQuotaEntity>> logicFilters) {
         logicFilters.forEach(logic -> {
             LogicStrategy strategy = AnnotationUtils.findAnnotation(logic.getClass(), LogicStrategy.class);
             if (Objects.nonNull(strategy)) {
@@ -39,15 +41,19 @@ public class DefaultLogicFactory {
         });
     }
 
-    public Map<String, ILogicFilter> openLogicFilter() {
+    public Map<String, ILogicFilter<UserAccountQuotaEntity>> openLogicFilter() {
         return logicFilterMap;
     }
 
     @Getter
     @AllArgsConstructor
     public enum LogicModel {
+        NULL("NULL", "放行不用过滤"),
         ACCESS_LIMIT("ACCESS_LIMIT", "访问次数过滤"),
         SENSITIVE_WORD("SENSITIVE_WORD", "敏感词过滤"),
+        ACCOUNT_STATUS("ACCOUNT_STATUS", "账户状态过滤"),
+        MODEL_TYPE("MODEL_TYPE", "模型类型过滤"),
+        USER_QUOTA("USER_QUOTA", "用户余额过滤"),
         ;
         private String code;
         private String info;

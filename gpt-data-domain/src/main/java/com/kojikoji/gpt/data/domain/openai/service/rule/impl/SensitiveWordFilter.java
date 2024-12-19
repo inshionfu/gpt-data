@@ -5,6 +5,7 @@ import com.kojikoji.gpt.data.domain.openai.annotation.LogicStrategy;
 import com.kojikoji.gpt.data.domain.openai.model.aggregates.ChatProcessAggregate;
 import com.kojikoji.gpt.data.domain.openai.model.entity.PromptEntity;
 import com.kojikoji.gpt.data.domain.openai.model.entity.RuleLogicEntity;
+import com.kojikoji.gpt.data.domain.openai.model.entity.UserAccountQuotaEntity;
 import com.kojikoji.gpt.data.domain.openai.model.vo.LogicCheckTypeVO;
 import com.kojikoji.gpt.data.domain.openai.service.rule.ILogicFilter;
 import com.kojikoji.gpt.data.domain.openai.service.rule.factory.DefaultLogicFactory;
@@ -28,7 +29,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 @LogicStrategy(logicModel = DefaultLogicFactory.LogicModel.SENSITIVE_WORD)
-public class SensitiveWordFilter implements ILogicFilter {
+public class SensitiveWordFilter implements ILogicFilter<UserAccountQuotaEntity> {
 
     @Resource
     private SensitiveWordBs words;
@@ -37,7 +38,7 @@ public class SensitiveWordFilter implements ILogicFilter {
     private String whiteListStr;
 
     @Override
-    public RuleLogicEntity<ChatProcessAggregate> filter(ChatProcessAggregate chatProcess) throws Exception {
+    public RuleLogicEntity<ChatProcessAggregate> filter(ChatProcessAggregate chatProcess, UserAccountQuotaEntity data) throws Exception {
         // 白名单用户放行
         if (chatProcess.isWhiteList(whiteListStr)) {
             return RuleLogicEntity.<ChatProcessAggregate>builder()

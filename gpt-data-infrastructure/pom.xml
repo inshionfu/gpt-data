@@ -9,13 +9,29 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.kojikoji</groupId>
     <artifactId>gpt-data-infrastructure</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- 自身模块 begin -->
+        <dependency>
+            <groupId>com.kojikoji</groupId>
+            <artifactId>gpt-data-domain</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- 自身模块 end -->
+    </dependencies>
+
+    <build>
+        <finalName>gpt-data-infrastructure</finalName>
+    </build>
 
 </project>
