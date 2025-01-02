@@ -78,3 +78,16 @@ logging:
   level:
     root: info
   config: classpath:logback-spring.xml
+
+xxl:
+  job:
+    admin:
+      addresses: http://124.221.174.50:7397/xxl-job-admin
+    executor:
+      address:
+      appname: gpt-job
+      ip:
+      port: 9999
+      logpath: /Users/inshion/gpt/data/applogs/xxl-job/jobhandler
+      logretentiondays: 50
+    accessToken: inshiontest
