@@ -39,6 +39,20 @@ public class WeiXinBehaviorService implements IWeiXinBehaviorService {
         }
 
         if (MsgTypeVO.TEXT.getCode().equals(userBehaviorMessageEntity.getMsgType())) {
+            String content = userBehaviorMessageEntity.getContent();
+
+            // 反馈信息
+            MessageTextEntity res = new MessageTextEntity();
+            res.setToUserName(userBehaviorMessageEntity.getOpenId());
+            res.setFromUserName(originalId);
+            res.setCreateTime(String.valueOf(System.currentTimeMillis()));
+            res.setMsgType("text");
+
+            if (!StringUtils.equals(content, "403")) {
+                res.setContent("请输入正确的请求");
+                return XmlUtil.beanToXml(res);
+            }
+
             // 缓存验证码
             String isExistCode = codeCache.getIfPresent(userBehaviorMessageEntity.getOpenId());
 
@@ -50,12 +64,6 @@ public class WeiXinBehaviorService implements IWeiXinBehaviorService {
                 isExistCode = code;
             }
 
-            // 反馈信息
-            MessageTextEntity res = new MessageTextEntity();
-            res.setToUserName(userBehaviorMessageEntity.getOpenId());
-            res.setFromUserName(originalId);
-            res.setCreateTime(String.valueOf(System.currentTimeMillis()));
-            res.setMsgType("text");
             res.setContent(String.format("您的验证码为：%s 有效期%d分钟", isExistCode, 3));
             return XmlUtil.beanToXml(res);
         }

@@ -16,5 +16,9 @@ public interface IUserAccountDao {
 
     int subAccountQuota(String openid);
 
+    int addAccountQuota(UserAccountPO plusAccountReq);
+
     UserAccountPO queryUserAccount(String openid);
+
+    void insertAccount(UserAccountPO plusAccountReq);
 }

@@ -7,14 +7,42 @@ app:
     # 版本，方便通过接口版本升级
     api-version: v1
     # 跨域，开发阶段可以设置为 * 不限制
-    cross-origin: https://itedus.cn
+    cross-origin: '*'
+    # 访问频次限制
+    limit-count: 10
+    # 白名单，不做频次拦截【微信的openai】oxfA9w8-23yvwTmo2ombz0E4zJv4
+    white-list: ojbZUv18lbmriaTjcCWBYkOrSbHA
+
+# 阿里支付
+alipay:
+  enabled: true
+  app_id: 2021000142698654
+  merchant_private_key: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCXIpv2vDcRhvbwvLElVq2LZG+tLfSFMZwX3DMGWWrdLeISzAiBMkJhtKBgmzDVlUd0/fE5S8vKaF7BfpaDdDLdQvHenELhhgh2ygZsgjxuNZNQE/bU5SqYO+hgDRv6BrlyWw4vsftytF6ecsDBuRDOOIT28jiQAA07TL6XkI2H3F8qxPTiq+7XXcUqxFGJKfTpxAYfX0Fs1NOFdkxScJw8C2t0ZZFOARaLAb2ePa5DohZ3hrW03rKgxhlmXmyAXWFeCKb0QT1w6uSm/GqsPonY/brGuUeeH5x1lIHIRCffmS2W08MW2ZBg5Wtuzr7ImyyJ6J54EVLw/frgWVAS7xU/AgMBAAECggEADF60zTkSeMjHJWUMSrYRdjs+OLpuLQimcf1/36Ep8fhzbH5uo8RtUnnqNn39PT3+n0C5oarmfyaTutqVjyTPlPSJv2KixrqlrrNSW0c9kvenmwJHTZ2EIvmkR1hLVed+/jEdtCGpJvZEWEukIzb2fSp7F4szvfWDH7tkThtyug/awmw1sJPD8ntl3A2ngoBKRl9qThEVbRzOmBbfdB8q2S/TDuwyufT2aV6AIXh7yc6J9LvlFQVxZMbHTk3nwSS8OY+EdIPI0fwrQ4XY6BbyjcRwYzSO6fwk2FowR47/qU71CpXuz4SWuqNq/uiEIV+x2utiulusa5bSbjVcVKO2oQKBgQDouS4Hg99Hb7X8ac9mUBb+HhgnNX489nejtrZJC+rOOiJ8iQdD3i1xg3Qxx3eeb+SGWxjQDqnkwXwoNR0jHhC1V4CYfaXemBRJuovYtBvpRay8YRyoC7Ki7XL6MibxBuL6sUpOG+fMNn5lizlp04nAbus5svlyEOHo+YtReaYZhQKBgQCmQGLONzaUZffyZYmnEDsEOPpMnJe8MkvUIbj4ogfbvEs8fEx4SXhgMYIFQROy8HSmSlkxZMwTEFeu5cpyeS81LLlnbBiJ6BAytKSqgNQKTRzGSeLGNCo2+ocPPArswwPIrmpF8vSFxwfgK5Oo3TavXoKQmB3azT8ZfQ4EOvos8wKBgEiRlfzZ7kIEX6c6B2ZMCx9qmvV/BMJVyLDQRL86bBmqnx5eTFmpalo/N3heTrqlAYmz1mTqbafbfa+8AD33HhauFnd2lsZ2fb0P4pPMdfejtl13msv7+dQ8XuINyX7XOugZaKY6pWlUhM19QIXzZL0Q2WDAonAjO46+YeciG91RAoGATTgKrI2opDTYfZX74cUAJG3ylDMHpzoVTmp7Z8Catc03hNiXDCfT6ZoVMiuP4sUc6UAPPYn7377veyTwa0suShyD4S2sGCHZpDOTaD5+PmqiutcGpdkE4pRqtwDEckQCNewNIIBAYwKW/eA/rWdSRxI2wsJk24QJkuUq5XwfR1ECgYEAqsXAth0EGX/MWQjmYHvXRWV0ENa/jFPfKqLWWRyjl0h/Vim0wgaUwAcgiHtHCYn2HViDSryJGvPJ495vxcOKwROkMH7+t3cftiQfXCbrYwy8VVvkyvbV6lBhc+iY4HPqtbv4WdajR7BVT9XJ1b4WsEhrjsQhUJgPK513S0BeDCU=
+  gatewayUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+  format: json
+  alipay_public_key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7RBAS5HXPYj4vhRhpPCcRtRGCHU1YJD9gFVw6Rw+eEVelHRFrQHWCC/Bem48IOKr7S8jzDij40XWFzPyCTrtJgf8jyavERxq6s+D3pIVkXLXihooRCNmOIeV1EYfT281vtyYzChBIHxvojpRmgr9xWUxjGIm+TnHCCwXGH6PCEamrT507snuQm4D+UoOZVl+OnURtBTeYI46+m7rmHYgDtjmAqvPm1AvZcaAvprdfB7ZS14xfztKH2kPJzy9N4NPxgOV2n9rUDoePdFscMBp3pTdsnvMsnQo+Fy0Zrdzuc38DSUvUZ9h+79313ubREOS4s4OzPgFnWNXqysiBXSCsQIDAQAB
+  notify_url: http://124.221.174.50/api/v1/sale/pay_notify
+  return_url: https://110.40.159.120
+  charset: utf-8
+  sign-type: RSA2
+
+# 线程池配置
+thread:
+  pool:
+    executor:
+      config:
+        core-pool-size: 20
+        max-pool-size: 50
+        keep-alive-time: 5000
+        block-queue-size: 5000
+        policy: CallerRunsPolicy
 
 # ChatGPT SDK Config
 glm:
   sdk:
     config:
       # 官网地址 https://api.openai.com/
-      api-host: https://open.bigmodel.cn/api/paas/v4/chat/completions/
+      api-host: https://open.bigmodel.cn/
       # 官网申请 https://platform.openai.com/account/api-keys
       api-key: e1d64e25bb44d7c570902235ebadfe7e.MU8eKrlWQUk8GXFd
 
@@ -23,6 +51,27 @@ wx:
     originalid: gh_d717e43049ed
     appid: wx5c1faadeed8d8e0a
     token: inshion123
+
+spring:
+  datasource:
+    username: root
+    password: GcI^7jO$TuxqQ5oqcT(
+    url: jdbc:mysql://sh-cynosdbmysql-grp-eyi7qlee.sql.tencentcdb.com:28074/openai?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+    driver-class-name: com.mysql.jdbc.Driver
+  hikari:
+    pool-name: Retail_HikariCP
+    minimum-idle: 15 #最小空闲连接数量
+    idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
+    maximum-pool-size: 25 #连接池最大连接数，默认是10
+    auto-commit: true  #此属性控制从池返回的连接的默认自动提交行为,默认值：true
+    max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+    connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
+    connection-test-query: SELECT 1
+  type: com.zaxxer.hikari.HikariDataSource
+
+mybatis:
+  mapper-locations: classpath:/mybatis/mapper/*.xml
+  config-location:  classpath:/mybatis/config/mybatis-config.xml
 
 # 日志
 logging:

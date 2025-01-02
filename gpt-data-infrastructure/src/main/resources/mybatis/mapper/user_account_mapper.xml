@@ -25,4 +25,15 @@
         WHERE openid = #{openid} AND surplus_quota > 0 AND status = 0
     </update>
 
+    <update id="addAccountQuota" parameterType="java.lang.String">
+        UPDATE user_account
+        SET surplus_quota = surplus_quota - 1
+        WHERE openid = #{openid} AND surplus_quota > 0 AND status = 0
+    </update>
+
+    <insert id="insertAccount" parameterType="com.kojikoji.gpt.data.infrastructure.po.UserAccountPO">
+        insert into user_account(openid, total_quota, surplus_quota, model_types, status, create_time, update_time)
+        values (#{openid}, #{totalQuota}, #{surplusQuota}, #{modelTypes}, #{status}, now(), now())
+    </insert>
+
 </mapper>
