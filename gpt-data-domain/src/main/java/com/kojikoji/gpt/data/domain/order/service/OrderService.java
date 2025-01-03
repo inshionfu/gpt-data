@@ -95,4 +95,19 @@ public class OrderService extends AbstractOrderService {
         return orderRepository.queryProducts();
     }
 
+    @Override
+    public List<String> queryTimeoutCloseOrderList() {
+        return orderRepository.queryTimeoutCloseOrderList();
+    }
+
+    @Override
+    public boolean changeOrderClose(String orderId) {
+        return orderRepository.changeOrderClose(orderId);
+    }
+
+    @Override
+    public List<String> queryReplenishmentOrder() {
+        return orderRepository.queryReplenishmentOrder();
+    }
+
 }

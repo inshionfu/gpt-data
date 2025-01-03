@@ -3,6 +3,8 @@ package com.kojikoji.gpt.data.infrastructure.dao;
 import com.kojikoji.gpt.data.infrastructure.po.OrderPO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @ClassName IOrderDao
  * @Description
@@ -25,4 +27,10 @@ public interface IOrderDao {
     OrderPO queryOrder(String orderId);
 
     int changeOrderDeliverStatus(String orderId);
+
+    List<String> queryTimeoutCloseOrderList();
+
+    boolean changeOrderClose(String orderId);
+
+    List<String> queryReplenishmentOrder();
 }

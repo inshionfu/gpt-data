@@ -172,7 +172,7 @@ public class OrderRepository implements IOrderRepository {
 
         // 3.发货
         // 3.1 查询用户账户信息
-        UserAccountPO userAccount = userAccountDao.queryUserAccount(orderId);
+        UserAccountPO userAccount = userAccountDao.queryUserAccount(order.getOpenid());
         UserAccountPO plusAccountReq = UserAccountPO.builder()
                 .openid(order.getOpenid())
                 .build();
@@ -191,5 +191,20 @@ public class OrderRepository implements IOrderRepository {
             userAccountDao.insertAccount(plusAccountReq);
         }
 
+    }
+
+    @Override
+    public List<String> queryTimeoutCloseOrderList() {
+        return orderDao.queryTimeoutCloseOrderList();
+    }
+
+    @Override
+    public boolean changeOrderClose(String orderId) {
+        return orderDao.changeOrderClose(orderId);
+    }
+
+    @Override
+    public List<String> queryReplenishmentOrder() {
+        return orderDao.queryReplenishmentOrder();
     }
 }

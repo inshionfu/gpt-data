@@ -27,4 +27,10 @@ public interface IOrderService {
     void deliverGoods(String orderId);
 
     List<ProductEntity> getProducts();
+
+    List<String> queryTimeoutCloseOrderList();
+
+    boolean changeOrderClose(String orderId);
+
+    List<String> queryReplenishmentOrder();
 }
