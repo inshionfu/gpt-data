@@ -22,7 +22,7 @@ public interface IOrderRepository {
 
     void updateOrderPayInfo(PayOrderEntity payOrderEntity);
 
-    void changeOrderPaySuccess(String orderId, String transactionId, BigDecimal totalAmount, Date payTime);
+    boolean changeOrderPaySuccess(String orderId, String transactionId, BigDecimal totalAmount, Date payTime);
 
     void deliverGoods(String orderId);
 
@@ -31,4 +31,6 @@ public interface IOrderRepository {
     boolean changeOrderClose(String orderId);
 
     List<String> queryReplenishmentOrder();
+
+    List<String> queryNoPayNotifyOrder();
 }

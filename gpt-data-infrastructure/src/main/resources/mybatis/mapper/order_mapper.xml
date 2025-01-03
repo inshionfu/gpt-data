@@ -111,4 +111,15 @@
         order by id asc
             limit 50
     </select>
+
+    <select id="queryNoPayNotifyOrder" resultType="java.lang.String">
+        select order_id as orderId
+        from gpt_order
+        where
+            order_status = 0 and pay_status = 0
+          and
+            now() >= order_time + INTERVAL 1 MINUTE
+        order by id asc
+            limit 10
+    </select>
 </mapper>

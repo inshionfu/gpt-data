@@ -144,7 +144,7 @@ public class OrderRepository implements IOrderRepository {
     }
 
     @Override
-    public void changeOrderPaySuccess(String orderId, String transactionId, BigDecimal totalAmount, Date payTime) {
+    public boolean changeOrderPaySuccess(String orderId, String transactionId, BigDecimal totalAmount, Date payTime) {
         OrderPO po = OrderPO.builder()
                 .orderId(orderId)
                 .payStatus(PayStatusVO.SUCCESS.getCode())
@@ -152,7 +152,8 @@ public class OrderRepository implements IOrderRepository {
                 .payAmount(totalAmount)
                 .payTime(payTime)
                 .build();
-        orderDao.changeOrderPaySuccess(po);
+        int count = orderDao.changeOrderPaySuccess(po);
+        return count == 1;
     }
 
     @Override
@@ -206,5 +207,10 @@ public class OrderRepository implements IOrderRepository {
     @Override
     public List<String> queryReplenishmentOrder() {
         return orderDao.queryReplenishmentOrder();
+    }
+
+    @Override
+    public List<String> queryNoPayNotifyOrder() {
+        return orderDao.queryNoPayNotifyOrder();
     }
 }

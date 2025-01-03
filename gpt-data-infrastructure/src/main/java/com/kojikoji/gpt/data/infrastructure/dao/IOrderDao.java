@@ -22,7 +22,7 @@ public interface IOrderDao {
 
     void updateOrderPayInfo(OrderPO po);
 
-    void changeOrderPaySuccess(OrderPO po);
+    int changeOrderPaySuccess(OrderPO po);
 
     OrderPO queryOrder(String orderId);
 
@@ -33,4 +33,6 @@ public interface IOrderDao {
     boolean changeOrderClose(String orderId);
 
     List<String> queryReplenishmentOrder();
+
+    List<String> queryNoPayNotifyOrder();
 }

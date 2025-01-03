@@ -18,7 +18,7 @@ public interface IOrderService {
     /**
      * 用户支付完成，修改订单状态
      */
-    void changeOrderPaySuccess(String orderId, String transactionId, BigDecimal totalAmount, Date payTime);
+    boolean changeOrderPaySuccess(String orderId, String transactionId, BigDecimal totalAmount, Date payTime);
 
     /**
      * 用户下单完成，发货
@@ -33,4 +33,6 @@ public interface IOrderService {
     boolean changeOrderClose(String orderId);
 
     List<String> queryReplenishmentOrder();
+
+    List<String> queryNoPayNotifyOrder();
 }
